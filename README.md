@@ -1,4 +1,4 @@
-# Software and data artifacts for pets26_coinjoin_analysis (cutoff time 2025-11-10)
+# Software and data artifacts for pets26_coinjoin_analysis (cutoff time 2025-11-10, blockheight 923063)
 Code and data artifacts for PETS'26 paper 'CoinJoin ecosystem insights for Wasabi 1.x, Wasabi 2.x and Whirlpool coordinator-based privacy mixers' (FIXME link)
  
 
@@ -58,5 +58,5 @@ Inspect results produced in /btc/dumplings_temp2/Scanner/
   * Figure 21 is composition of /wasabi2_zksnacks/wasabi2_zksnacks_wallets_predictions_drops.png and /wasabi2_kruw/wasabi2_kruw_wallets_predictions_drops.png
   * Figure 22 is composition of ww2_realexp_as25_fees.png and ww2_realexp_as38_fees.png (generated from non-public dataset not shared due to privacy reasons as explained in paper)
   * Table 2 is generated from non-public dataset not shared due to privacy reasons as explained in paper
-  * Table 3 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "latex_summary", "earliest_cjtx", "earliest_time", "latest_cjtx", "latest_time" and "total_coinjoins" keys.     * Table 3 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "latex_summary", "earliest_cjtx", "earliest_time", "latest_cjtx", "latest_time" and "total_coinjoins" keys.   
+  * Table 3 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "latex_summary", "earliest_cjtx", "earliest_time", "latest_cjtx", "latest_time" and "total_coinjoins" keys.    
   * Table 4 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "earliest_cjtx" and "latest_cjtx" keys.
