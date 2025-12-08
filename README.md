@@ -13,12 +13,39 @@ Code and data artifacts for PETS'26 paper 'CoinJoin ecosystem insights for Wasab
 	
 ## Datasets
 The following datasets are used as a part of processing.
-  * Crawled coordinators: /coinjoin-analysis/data/wasabi2/txid_coord.json
+  * Crawled coordinators + manual additions: /coinjoin-analysis/data/wasabi2/txid_coord.json 
   * Manual false positives: /coinjoin-analysis/data/wasabi1/false_cjtxs.json, /coinjoin-analysis/data/wasabi2/false_cjtxs.json, /coinjoin-analysis/data/whirlpool/false_cjtxs.json
-  * Processed Dumplings dataset: FIXME zenodo
+  * Processed Dumplings dataset (cutoff time 2025-11-10, blockheight 923063): FIXME zenodo
 
 
-## Replication instructions
+
+## Replication
+
+### Main Results and Claims
+
+### Main Result 1: Detection of non-public coordinators
+  * Means of detection of non-attributed transactions and their prevalence (Figure 6), API monitoring + Dumplings on-chain extraction
+  * Algorithm for attribution to known cooridnators, connected clusters of unattributed (=> unknown coord)
+  * Selection of sensible threshold for attribution algorithm (Figure 13, 14)
+  * Provide expected list of transactions txid_to_coord_discovered_renamed.json + /Scanner/crawl_datasets.png
+  * Reasoning why it is separate cluster (coordinator) - almost no remix to other coords (Figure 18, Figure 19) 
+
+
+### Main Result 2: Prediction of number of participants
+  * Extraction of prediction factor and error bounds from client-side experiments (linear factor + error bounds + selection of outputs due to better stability)
+  * Application to coinjoin in time (Figure 10)
+
+
+### Main Result 3: Liquidity statistics for separate coordinator
+  * Provide expected liquidity_xxx.json files 
+  * Extraction, false positives, reordering, filtering
+  * Liquidity visualizations  
+
+
+
+### Experiments
+
+### Experiment 1: run them all
 1. Obtain Linux machine with at least 64G RAM (ideally 128GB). Around 98GB is required at peak (only for very short time, compensation of missing space via swap file is ok)
 1. Prepare directories: $BASE_PATH/btc/  
 1. Checkout this repository into $BASE_PATH/btc/ 
@@ -37,7 +64,9 @@ pip install -r requirements.txt
 ./process_daily.sh
 ```
 
-## Investigate results
+
+
+#### Investigate results
 Inspect results produced in /btc/dumplings_temp2/Scanner/ 
   * Figure 1 and 2 are manually drawn illustration diagrams  
   * Figures 3-5 are composition of ww2_as25_38_privacy_progress.png, ww2_as25_38_anonscoregain.png, ww2_realexp_num_inputs.png, ww2_realexp_num_outputs.png, ww2_realexp_as25_inoutheatmap.png, ww2_realexp_as38_inoutheatmap.png (generated from non-public dataset not shared due to privacy reasons as explained in paper)
@@ -61,3 +90,12 @@ Inspect results produced in /btc/dumplings_temp2/Scanner/
   * Table 2 is generated from non-public dataset not shared due to privacy reasons as explained in paper
   * Table 3 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "latex_summary", "earliest_cjtx", "earliest_time", "latest_cjtx", "latest_time" and "total_coinjoins" keys.    
   * Table 4 is generated from /Scanner/liquidity_summary_xxx.json files where xxx is name of a pool and with usage of "earliest_cjtx" and "latest_cjtx" keys.
+
+
+## Limitations
+The replication of the following results and datasets extraction is not  We are not able to 
+  * Client-side characteristics extraction due to non-public client-side dataset
+  * Dumplings extraction dataset (due to change in time after cutoff date)
+  * API dataset collection not repeatable - coordinators and collection services no longer operational
+
+
