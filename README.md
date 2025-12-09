@@ -54,20 +54,25 @@ The following datasets are used as a part of processing.
 cd $BASE_PATH
 git clone https://github.com/crocs-muni/pets26_coinjoin_analysis.git
 ```
-5. Download dumplings.zip into $BASE_DIR
+5. Download dumplings.zip into $BASE_PATH
 ```
 TODO
 ```
-6. Copy `coinjoin-analysis` into $BASE_DIR
+6. Copy `coinjoin-analysis` into $BASE_PATH
 ```
-cp -r $BASE_DIR/pets26_coinjoin_analysis/coinjoin-analysis $BASE_DIR
+cp -r $BASE_PATH/pets26_coinjoin_analysis/coinjoin-analysis $BASE_PATH
 ```
-7. Install python requirements for coinjoin-analysis project:
+7. Create python virtual environment
+```
+python3 -m venv ./venv
+source ./venv/bin/activate
+```
+8. Install python requirements for coinjoin-analysis project:
 ```
 cd $BASE_PATH/coinjoin-analysis
 pip install -r requirements.txt
 ```
-8. Run processing scripts (~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF)
+9. Run processing scripts (~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF)
 ```
 cd $BASE_PATH/coinjoin-analysis
 ./scripts/run_pets.sh
