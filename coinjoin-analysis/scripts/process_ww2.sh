@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-# Prepare expected environment
-BASE_PATH=$HOME
-source $BASE_PATH/btc/coinjoin-analysis/scripts/activate_env.sh
-
-# Copy processed metadata 
-#cp $BASE_PATH/btc/coinjoin-analysis/data/wasabi2/wasabi2_wallet_predictions.json $TMP_DIR/Scanner/
-
 
 # Extract and process Dumplings results
 python3 -m cj_process.parse_dumplings --cjtype ww2 --action process_dumplings --target-path $TMP_DIR/ | tee parse_dumplings.py.log
@@ -18,18 +11,18 @@ for dir in wasabi2_others wasabi2_zksnacks; do
 done
 
 # Copy wallet prediction files
-cp $BASE_PATH/btc/coinjoin-analysis/data/wasabi2/wallet_estimation_matrix_ww2kruw.json $TMP_DIR/Scanner/
-cp $BASE_PATH/btc/coinjoin-analysis/data/wasabi2/wallet_estimation_matrix_ww2zksnacks.json $TMP_DIR/Scanner/
+cp $BASE_PATH/coinjoin-analysis/data/wasabi2/wallet_estimation_matrix_ww2kruw.json $TMP_DIR/Scanner/
+cp $BASE_PATH/coinjoin-analysis/data/wasabi2/wallet_estimation_matrix_ww2zksnacks.json $TMP_DIR/Scanner/
 
 
 # Copy already known false positives from false_cjtxs.json
 for dir in wasabi2 wasabi2_others wasabi2_zksnacks; do
-    cp $BASE_PATH/btc/coinjoin-analysis/data/wasabi2/false_cjtxs.json $TMP_DIR/Scanner/$dir/
+    cp $BASE_PATH/coinjoin-analysis/data/wasabi2/false_cjtxs.json $TMP_DIR/Scanner/$dir/
 done
 
 # Run coordinators detection
 for dir in wasabi2 wasabi2_others wasabi2_zksnacks; do
-    cp $BASE_PATH/btc/coinjoin-analysis/data/wasabi2/txid_coord.json $TMP_DIR/Scanner/$dir/
+    cp $BASE_PATH/coinjoin-analysis/data/wasabi2/txid_coord.json $TMP_DIR/Scanner/$dir/
 done
 python3 -m cj_process.parse_dumplings --cjtype ww2 --action detect_coordinators --target-path $TMP_DIR/ | tee parse_dumplings.py.log
 # Evaluate intermix flows for detected coordinators
@@ -50,8 +43,6 @@ done
 # Extract TX flags
 python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars "EXPORT_TX_FLAGS=True" --target-path $TMP_DIR/
 
-# Run detection of Bybit hack
-#python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars="ANALYSIS_BYBIT_HACK=True" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
 
 # Analyse liquidity 
 python3 -m cj_process.parse_dumplings --cjtype ww2 --target-path $TMP_DIR/ --env_vars "ANALYSIS_LIQUIDITY=True" | tee parse_dumplings.py.log

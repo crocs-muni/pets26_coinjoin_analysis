@@ -47,23 +47,31 @@ The following datasets are used as a part of processing.
 
 ### Experiment 1: run them all
 1. Obtain Linux machine with at least 64G RAM (ideally 128GB). Around 98GB is required at peak (only for very short time, compensation of missing space via swap file is ok)
-1. Prepare directories: $BASE_PATH/btc/  
-1. Checkout this repository into $BASE_PATH/btc/ 
-1. Install python requirements for coinjoin-analysis project
+2. Prepare a base directorie where all the results will be created: e.g. `mkdir work_dir`
+3. Set variable `$BASE_PATH` to the working directory -- e.g. `export BASE_PATH=/home/user/work_dir`
+4. Clone this repository into `$BASE_PATH/`:
 ```
+cd $BASE_PATH
+git clone https://github.com/crocs-muni/pets26_coinjoin_analysis.git
+```
+5. Download dumplings.zip into $BASE_DIR
+```
+TODO
+```
+6. Copy `coinjoin-analysis` into $BASE_DIR
+```
+cp -r $BASE_DIR/pets26_coinjoin_analysis/coinjoin-analysis $BASE_DIR
+```
+7. Install python requirements for coinjoin-analysis project:
+```
+cd $BASE_PATH/coinjoin-analysis
 pip install -r requirements.txt
 ```
-1. Setup and run bitcoind
-1. Perform initial blockchain download (IBD, ~1 week)
-1. Install .NET requirements and compile Dumplings
-1. Run Dumplings, wait until candidate raw coinjoins are extracted (~3 days)
-  * Alternatively, download pre-processed Dumplings files collected on 2025-11-10 from HERE (FIXME).   
-1. zip Dumplings results from .../Dumplings/Dumplings.Cli/Scanner into dumplings.zip 
-1. Run processing scripts on Linux machine (~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF)
+8. Run processing scripts (~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF)
 ```
-./process_daily.sh
+cd $BASE_PATH/coinjoin-analysis
+./scripts/run_pets.sh
 ```
-
 
 
 #### Investigate results
