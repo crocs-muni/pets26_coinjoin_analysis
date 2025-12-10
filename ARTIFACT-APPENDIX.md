@@ -198,3 +198,6 @@ The replication of the following results and datasets extraction is not included
 
 
 ## Notes on Reusability
+
+This artifacts provides multiple methods for analysis and visualization of data about coinjoins collected from the Bitcoin blockchain and from Wasabi Wallet 2 coordinator API. These methods can be extended and applied on future data, providing a good starting point for a future, more advanced analysis of statistical properties of coinjoins and investigation of different mixing patterns. 
+
