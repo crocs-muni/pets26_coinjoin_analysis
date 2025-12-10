@@ -36,7 +36,7 @@ The artifacts consist of programs for collection of CoinJoin related data – bo
 The following datasets are used as a part of processing.
   * Crawled coordinators + manual additions: /coinjoin-analysis/data/wasabi2/txid_coord.json 
   * Manual false positives: /coinjoin-analysis/data/wasabi1/false_cjtxs.json, /coinjoin-analysis/data/wasabi2/false_cjtxs.json, /coinjoin-analysis/data/whirlpool/false_cjtxs.json
-  * Processed Dumplings dataset (cutoff time 2025-11-10, blockheight 923063): FIXME zenodo
+  * Processed Dumplings dataset (cutoff time 2025-11-10, blockheight 923063): https://zenodo.org/records/17870025
 
 
 ### Security/Privacy Issues and Ethical Concerns 
@@ -64,7 +64,7 @@ _the specifications of the used hardware_:
 * Python 3.11+
 * .NET 8 SDK
 * Necessary python libraries are listed in: https://github.com/crocs-muni/pets26_coinjoin_analysis/blob/main/coinjoin-analysis/requirements.txt
-* Datasets needed to run the artifacts are available at: TODO
+* Datasets needed to run the artifacts are available at: https://zenodo.org/records/17870025
 
 
 ### Estimated Time and Storage Consumption (Required for Functional and Reproduced badges)
@@ -91,7 +91,8 @@ git clone https://github.com/crocs-muni/pets26_coinjoin_analysis.git
 ```
 5. Download dumplings.zip into $BASE_PATH
 ```
-TODO
+wget https://zenodo.org/records/17870025/files/dumplings_20251110.zip
+mv dumplings_20251110.zip $BASE_PATH/dumplings.zip
 ```
 6. Copy `coinjoin-analysis` into $BASE_PATH
 ```
