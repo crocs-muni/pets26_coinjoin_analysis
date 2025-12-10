@@ -22,7 +22,7 @@ These are the digital artifacts of the paper “CoinJoin ecosystem insights for 
 }
 ```
 
-The artifacts consist of programs for collection of CoinJoin related data – both on-chain and off-chain. Further is features postprocessing scripts for these data and collected datasets.
+The artifacts consist of programs for collection of CoinJoin related data – both on-chain and off-chain. Further it features postprocessing scripts for these data and collected datasets.
 
 **Repository directories structure:**
   * **coinjoin-analysis** (commit [369fe7c](https://github.com/crocs-muni/coinjoin-analysis/commit/369fe7cfe80c6ff3e95b8b997dd22174fa0a010a)) - Python processing of Dumplings project results. Up-to-date version: https://github.com/crocs-muni/coinjoin-analysis
@@ -47,30 +47,31 @@ This artifact poses no security or privacy risks. As we do not provide the data 
 
 ### Hardware Requirements (Required for Functional and Reproduced badges)
 
-_minimal hardware requirements_:
+_Minimal hardware requirements_:
 
 * The main hardware requirement is that around 100 GB of RAM is necessary. 
 * Around 150 GB of free disk space is necessary.
 * No GPU is required
 * No specific CPU is required, however, the execution time highly depends on it. 
 
-_the specifications of the used hardware_:
+_Specifications of the used hardware_:
 * RAM: 128 GB
 * Processor: 13th Gen Intel(R) Core(TM) i7-13700KF
 * The results of our experiments should not be influenced by a specific choice of hardware.
 
 ### Software Requirements (Required for Functional and Reproduced badges)
 * OS: We used Debian 12, however the artifact should work with any reasonably new Linux distribution. 
+* Bash
 * Python 3.11+
-* .NET 8 SDK
 * Necessary python libraries are listed in: https://github.com/crocs-muni/pets26_coinjoin_analysis/blob/main/coinjoin-analysis/requirements.txt
 * Datasets needed to run the artifacts are available at: https://zenodo.org/records/17870025
 
 
 ### Estimated Time and Storage Consumption (Required for Functional and Reproduced badges)
 
-- The overall human and compute times required to run the artifact: 15 minutes
-- The overall disk space consumed by the artifact: 150 GB
+- The overall human time required to run the artifact: ~20 minutes
+- The overall compute time required to run the artifact: ~4 hours
+- The overall disk space consumed by the artifact: ~150 GB
 
 
 ## Environment 
@@ -81,9 +82,9 @@ All artifacts are available from https://github.com/crocs-muni/pets26_coinjoin_a
 
 ### Set up the environment 
 
-1. Obtain Linux machine with at least 64G RAM (ideally 128GB). Around 98GB is required at peak (only for very short time, compensation of missing space via swap file is ok)
+1. Obtain Linux machine with at least 64G RAM (ideally 128GB). Around 100GB is required at peak (only for very short time, compensation of missing space via swap file should be ok)
 2. Prepare a base directorie where all the results will be created: e.g. `mkdir work_dir`
-3. Set variable `$BASE_PATH` to the working directory -- e.g. `export BASE_PATH=/home/user/work_dir`
+3. Set variable `$BASE_PATH` to the working directory - e.g. `export BASE_PATH=/home/user/work_dir`
 4. Clone this repository into `$BASE_PATH/`:
 ```
 cd $BASE_PATH
@@ -111,7 +112,7 @@ pip install -r requirements.txt
 
 ### Testing the Environment 
 
-If the installation of libraries ran without errors and all everything is correctly placed in $BASE_PATH (Test 1), the environment should be set up correctly. 
+If the installation of libraries ran without errors and everything is correctly placed in $BASE_PATH (Test 1), the environment should be set up correctly. 
 
 #### Test 1
 Run the following:
@@ -132,36 +133,39 @@ venv
 
 ### Main Results and Claims
 
-### Main Result 1: Detection of non-public coordinators
+#### Main Result 1: Detection of non-public coordinators
   * Means of detection of non-attributed transactions and their prevalence (Figure 6), API monitoring + Dumplings on-chain extraction
-  * Algorithm for attribution to known cooridnators, connected clusters of unattributed (=> unknown coord)
+  * Algorithm for attribution of transactions to known cooridnators, connected clusters of unattributed transactions (=> unknown coord)
   * Selection of sensible threshold for attribution algorithm (Figure 13, 14)
   * Provide expected list of transactions txid_to_coord_discovered_renamed.json + /Scanner/crawl_datasets.png
-  * Reasoning why it is separate cluster (coordinator) - almost no remix to other coords (Figure 18, Figure 19) 
+  * Reasoning why it is separate cluster (coordinator) - almost no remix to other coordinators (Figure 18, Figure 19) 
 
 
-### Main Result 2: Prediction of number of participants
+#### Main Result 2: Prediction of number of participants
   * Extraction of prediction factor and error bounds from client-side experiments (linear factor + error bounds + selection of outputs due to better stability)
-  * Application to coinjoin in time (Figure 10)
+  * Application to coinjoins in time (Figure 10)
 
 
-### Main Result 3: Liquidity statistics for separate coordinator
+#### Main Result 3: Liquidity statistics for separate coordinator
   * Provide expected liquidity_xxx.json files 
-  * Extraction, false positives, reordering, filtering
-  * Liquidity visualizations  
+  * Postprocessing of collected coinjoin transactions: Extraction, false positives, reordering, filtering
+  * CoinJoin liquidity visualizations  
 
 
 ### Experiments
 
 #### Experiment 1: Run all processing scripts 
-(~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF)
+Time: ~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF
+Storage: ~150 GB
 
-All the analytical scripts can be simply executed using `run_pets.sh` script as follows:
+All the analytical scripts can be simply executed using `run_pets.sh` script as follows(storing both stdout and stderr into `log.txt` for potential debugging):
 
 ```
 cd $BASE_PATH/coinjoin-analysis
-./scripts/run_pets.sh
+./scripts/run_pets.sh >>log.txt 2>&1
 ```
+If everything went correctly `$BASE_PATH/summary.log` should contain all executed python scripts always followed with line `SUCCESS (elapsed: XX.XX seconds)`. 
+In case that some commands are not followed by such a message, re-running these commands should fix the issue. However, it such situation would occur, please send us the `log.txt` file for further investigation. 
 
 ##### Experiment results
 
@@ -192,8 +196,8 @@ Inspect results produced in /btc/dumplings_temp2/Scanner/
 ## Limitations
 
 The replication of the following results and datasets extraction is not included in the Evaluations instructions:
-  * Client-side characteristics extraction (Figures 3-5, Table 2) -- We do not provide dataset needed for reproduction of these results as it could har users privacy as discussed in the Ethics section of the paper.  
-  * Dumplings extraction dataset -- We do not instruct the evaluator to recollect the dumplings dataset as it is a very time consuming process. Instead, we provide the dataset. However, we provide the version of Dumplings including our modifications.
+  * Client-side characteristics extraction (Figures 3-5, Table 2) - We do not provide dataset needed for reproduction of these results as it could har users privacy as discussed in the Ethics section of the paper.  
+  * Dumplings extraction dataset - We do not instruct the evaluator to recollect the dumplings dataset as it is a very time consuming process. Instead, we provide the dataset. However, we provide the version of Dumplings including our modifications.
   * API dataset collection is not repeatable. It is impossible to reproduce collection of TXIDs, we did by monitoring coordinator API. We provide the dataset. Furthermore, we provide the scripts used in `API_monitoring` and instructions on how to use them. 
 
 
