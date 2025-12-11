@@ -3747,26 +3747,30 @@ def main(argv=None):
     if op.ANALYZE_DETECT_COORDINATORS_ALG_DETAILED:
         if op.CJ_TYPE == CoinjoinType.WW2:
             # Drop fraction of trailing transactions from ground truth attribution
-            # cja.wasabi_detect_coordinators_evaluation_parallel(
-            #     os.path.join(target_path, 'wasabi2_others'),
-            #     cja._eval_drop_attributions_single_coord,
-            #     cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), [1], cja.DROP_TYPE.TAIL),
-            #     'coord_discovery_analysis___drop__tail')
             cja.wasabi_detect_coordinators_evaluation_parallel(
                 os.path.join(target_path, 'wasabi2_others'),
                 cja._eval_drop_attributions_single_coord,
-                cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), [1], cja.DROP_TYPE.FRONT),
-                'coord_discovery_analysis___drop__front')
+                cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), [1], cja.DROP_TYPE.TAIL),
+                'coord_discovery_analysis___drop__tail')
+
+            cjvis.plot_coord_attribution_stats_aggregated(target_path, 'all_coord_discovery_analysis___drop__tail', 'tail, single coordinator', omitt_coords, True, False)
+
+            # cja.wasabi_detect_coordinators_evaluation_parallel(
+            #     os.path.join(target_path, 'wasabi2_others'),
+            #     cja._eval_drop_attributions_single_coord,
+            #     cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), [1], cja.DROP_TYPE.FRONT),
+            #     'coord_discovery_analysis___drop__front')
 
             # Drop random transactions from ground truth attribution of any coordinator
             # Note: As we are dropping from any coordinator, then every coordinator tested in parallel
             #       is one independent try => if we repeat 10x => we made 10x len(coords) evaluations
-            # cja.wasabi_detect_coordinators_evaluation_parallel(
-            #     os.path.join(target_path, 'wasabi2_others'),
-            #     cja._eval_drop_attributions_single_coord,
-            #     cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(1, 101, 1)), list(range(0, 1)),
-            #                                      cja.DROP_TYPE.RANDOM_ANY),
-            #     'coord_discovery_analysis___drop__randomany')
+            cja.wasabi_detect_coordinators_evaluation_parallel(
+                os.path.join(target_path, 'wasabi2_others'),
+                cja._eval_drop_attributions_single_coord,
+                cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(1, 101, 1)), list(range(0, 1)),
+                                                 cja.DROP_TYPE.RANDOM_ANY),
+                'coord_discovery_analysis___drop__randomany')
+            cjvis.plot_coord_attribution_stats_aggregated(target_path, 'all_coord_discovery_analysis___drop__randomany', 'random, any coordinator', omitt_coords, True, True)
 
             # cja.wasabi_detect_coordinators_evaluation_parallel(
             #     os.path.join(target_path, 'wasabi2_others'),
@@ -3774,11 +3778,12 @@ def main(argv=None):
             #     cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), list(range(0, 2)), cja.DROP_TYPE.RANDOM_ANY),
             #     'coord_discovery_analysis___drop__randomany')
 
-            # cja.wasabi_detect_coordinators_evaluation_parallel(
-            #     os.path.join(target_path, 'wasabi2_others'),
-            #     cja._eval_drop_attributions_single_coord,
-            #     cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), list(range(0, 10)), cja.DROP_TYPE.RANDOM_SINGLE),
-            #     'coord_discovery_analysis___drop__randomsingle')
+            cja.wasabi_detect_coordinators_evaluation_parallel(
+                os.path.join(target_path, 'wasabi2_others'),
+                cja._eval_drop_attributions_single_coord,
+                cja.COORD_DISCOVERY_ANALYSIS_CFG([0.4], list(range(0, 101, 1)), list(range(0, 10)), cja.DROP_TYPE.RANDOM_SINGLE),
+                'coord_discovery_analysis___drop__randomsingle')
+            cjvis.plot_coord_attribution_stats_aggregated(target_path, 'all_coord_discovery_analysis___drop__randomsingle', 'random, single coordinator', omitt_coords, True, False)
 
             # Analyze impact of threshold for intermix attributions
             # cja.wasabi_detect_coordinators_evaluation_parallel(
@@ -3828,8 +3833,6 @@ def main(argv=None):
                 writer.writerows(cjtxs_flags_csv)
 
 
-    # !!! Generate intermix flows not only for second but all other known coordinators
-
     print('### SUMMARY #############################')
     SM.print_summary()
     print('### END SUMMARY #########################')
@@ -3844,74 +3847,3 @@ def main(argv=None):
 if __name__ == "__main__":
     main()
 
-
-    # TODO: For JoinMarket, detect transactions filtered as false positives which are connected to real jm cjtxs
-
-    # TODO: Set x labels for histogram of frequencies to rounded denominations
-    # TODO: Detect likely cases of WW2 round split due to more than 400 inputs registered
-    #   (two coinjoins broadcasted close to each other, sum of inputs is close or higher than 400)
-    # TODO: Detect if multiple rounds were happening in parallel (coinjoin time close to each other)
-
-    # TODO: Huge consolidation of Whirlpool coins: https://mempool.space/tx/d463b35b3d18dda4e59f432728c7a365eaefd50b24a6596ab42a077868e9d7e5
-    #  (>60btc total, payjoin (possibly fake) attempted, 140+ inputs from various )
-    # https://mempool.space/tx/8f59577b2dfa88e7d7fdd206a17618893db7559007a15658872b665bc16417c5
-    # https://mempool.space/tx/d463b35b3d18dda4e59f432728c7a365eaefd50b24a6596ab42a077868e9d7e5
-    # https://mempool.space/tx/57a8ea3ba1568fed4d9f7d7b3b84cdec552d9c49d4849bebf77a1053c180d0d1
-    #
-
-    # TODO: Analyze difference of unmoved and dynamic liquidity for Whirlpool between 2024-04-24 and 2024-08-24 (impact of knowledge of whirlpool seizure). Show last 1 year.
-
-    # Analyze dominance cost:
-    # 1. Coordinator fee to maintain X% pool liquidity at the time (put new input in if current liquidity below X%)
-    # 2. Mining fees to maintain X% control of all inputs / outputs of each coinjoin. Disregard outliers with large sudden
-    # incoming liquidity which will not be completely mixed anyway
-    # - Stay in pool if already there (not to pay coordination fee again)
-    # - Maximize impact of X% presence (WW2 outputs computation deviation)
-    # Have X% control of all standard output denominations
-    # (=> for whirlpool, have X% of all active remixing liquidity => will be selected )
-
-    # TODO: Plot graph of remix rates (values, num_inputs) as line plot for all months into single graph
-
-    # TODO: Recompute fresh inflows for post-zksnacks coordinators
-
-
-# b71981909c440bcb29e9a2d1cde9992cc97d3ca338c925c4b0547566bdc62f4d
-# ec9d5c2c678a70e304fa6e06a6430c9aff49e75107ac33f10165b14f0fa9a1f4
-# f872a419a48578389994323e6ee565ba15f4b9f71e72fceabc6a866505d13a6f
-
-# Initial transaction for some new wasabi2 pool (inputs are non-cjtx): cdb245e4981d140f0a3a56431c374f593782aa3bef0cfb3abe733cbc5849a243
-# Search for previous cjtxs inputs for small pools:
-#   db65f85f4ddb2feb4ffaa1d8eb1485b46329bdc291bc965b5c6b3e4ab5edf2ff
-#   d6b7798869f4eb147e524d75d204a9476576465695bdca070711f47ebe838c82
-#   3106e3766f95cb4964c36bdf3802dbd68bdc3fe82851ccd8f1a273db2f7fa84d
-
-# Search for subsequent cjtxs for small pools:
-#   607bc2b8e8cf3498885d0e908e134f3900d49e97efb96ea2ef65b5c676b6d49a
-#   7f31565b9da80406d9994d9b35e71d921d19d3d5bebb9f0802d00908b9620408
-#   b9857ec5dc86ed867f0329fd6982767fdc0f5d188df896c85ec9dcf2e3202952
-#   ...
-#   3106e3766f95cb4964c36bdf3802dbd68bdc3fe82851ccd8f1a273db2f7fa84d
-
-# Strange false positives?
-# 3106e3766f95cb4964c36bdf3802dbd68bdc3fe82851ccd8f1a273db2f7fa84d
-
-
-#   Clever consolidation: 349f27c3104984f2668f981283695b81ce96a4ee5d984f8df26ee92c52dc6fe4
-
-# cjtx with no output remixes (possibly end of coordinator): https://mempool.space/tx/22f64af816772533696b15677b00b780acff6fe39cd09b98d84ab95bb3c46c3a
-#
-
-# WW1 last cjtx?
-# 2023-07-13 11:27:08 635fa30bfb56b6f24f6474142a57ee58306a98b9c2887ee8a799ccb4fea4a219 0.10143340
-
-
-# WW1 paralell early coinjoin coordinator :
-# start 2018-08-02 15:57:32   38a83a9766357871a77992ecaead52f70c5f9f703769e6ebd4dcdb05172b28a9
-# end 2019-01-02 12:57:09 db73c667fd25aa6cf56a24cd4909d3d4b28479f79ba6ec86fe91125dc12e2022
-# Then large consolidations
-
-# Coinjoin-looking transaction, but having just 0.5 outputs eventually which are then spread again
-# a35b759d3cc0ebda98b4be110498d50cb0a270a1053fe5ab910e5b350950255c
-
-# Strange coinjoin-like transactions with consolidation of several subsequent outputs (=> same user might have own outputs sorted together?)
-# 70e7cbbe816aa538b801600681e6213260eaf2849e111da82dbe98c303d14bc3
