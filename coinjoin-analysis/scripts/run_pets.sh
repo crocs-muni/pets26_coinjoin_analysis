@@ -18,7 +18,7 @@ mkdir $TMP_DIR/
 #unzip $BASE_PATH/btc/dumplings.zip -d $TMP_DIR/
 unzip $BASE_PATH/dumplings.zip -d $TMP_DIR/
 
-unzip $BASE_PATH/missing_dumplings_txs.zip -d $BASE_PATH/missing_dumplings_txs
+unzip $BASE_PATH/missing_dumplings_txs.zip -d $BASE_PATH/
 
 
 #
