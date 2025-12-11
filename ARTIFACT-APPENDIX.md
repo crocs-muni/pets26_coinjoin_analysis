@@ -50,7 +50,7 @@ This artifact poses no security or privacy risks. As we do not provide the data 
 _Minimal hardware requirements_:
 
 * The main hardware requirement is that around 100 GB of RAM is necessary. 
-* Around 150 GB of free disk space is necessary.
+* Around 130 GB of free disk space is necessary.
 * No GPU is required
 * No specific CPU is required, however, the execution time highly depends on it. 
 
@@ -71,7 +71,7 @@ _Specifications of the used hardware_:
 
 - The overall human time required to run the artifact: ~20 minutes
 - The overall compute time required to run the artifact: ~4 hours
-- The overall disk space consumed by the artifact: ~150 GB
+- The overall disk space consumed by the artifact: ~130 GB
 
 
 ## Environment 
@@ -159,7 +159,7 @@ venv
 
 #### Experiment 1: Run all processing scripts 
 Time: ~4 hours on Debian Linux, 13th Gen Intel(R) Core(TM) i7-13700KF
-Storage: ~150 GB
+Storage: ~130 GB
 
 All the analytical scripts can be simply executed using `run_pets.sh` script as follows(storing both stdout and stderr into `log.txt` for potential debugging):
 
