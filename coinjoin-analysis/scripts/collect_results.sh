@@ -11,7 +11,8 @@ for i in {1..22}; do
 done
 
 mkdir -p "$ARTIF_DIR/table1"
-mkdir -p "$ARTIF_DIR/table2_3"
+mkdir -p "$ARTIF_DIR/table2"
+mkdir -p "$ARTIF_DIR/table3_4"
 
 # Data collection
 
@@ -81,7 +82,9 @@ echo "Omitted due to high compute time." > $ARTIF_DIR/fig21/info.txt
 
 echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/fig22/info.txt
 
-echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/table1/info.txt
+echo "Table 1 contains only definitions - nothing to reproduce" > $ARTIF_DIR/table1/info.txt
+
+echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/table2/info.txt
 
 cp $RESULTS_DIR/liquidity_summary_*.json $ARTIF_DIR/table2_3
 
