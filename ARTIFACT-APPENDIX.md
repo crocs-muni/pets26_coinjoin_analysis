@@ -172,7 +172,9 @@ In case that some commands are not followed by such a message, re-running these 
 
 ##### Experiment results
 
-The last script invoked in the `run_pets.sh` script copied all the results into `$BASE_PATH/results` into individual folders for each figure or table. For some figures, it inserted explanation of why the figure is missing, see Limitations section for more details. 
+The last script invoked in the `run_pets.sh` script copied the results into `$BASE_PATH/results` into individual folders for each figure or table. For some figures, it inserted explanation of why the figure is missing, see Limitations section for more details. 
+
+Graphs from Figures 27, 28, 29, 30, 31, 34, 35, 36 for individual months are located in `$BASE_PATH/dumplings_temp/Scanner/<coordinator>/<month>`. 
 
 
 ## Limitations

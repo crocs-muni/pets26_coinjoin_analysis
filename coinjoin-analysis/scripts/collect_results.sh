@@ -6,7 +6,7 @@ echo "Collecting data from $RESULTS_DIR"
 echo "Storing results to $ARTIF_DIR"
 
 mkdir $ARTIF_DIR
-for i in {1..22}; do
+for i in {1..26}; do
     mkdir -p "$ARTIF_DIR/fig$i"
 done
 
@@ -29,8 +29,7 @@ echo "Generated from non-public dataset not made public due to privacy reasons a
 cp "$RESULTS_DIR/wasabi2_others/crawl_datasets.png" $ARTIF_DIR/fig6
 
 cp "$RESULTS_DIR/wasabi2/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7
-echo "For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => 'python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
-' " > $ARTIF_DIR/fig7/info.txt
+echo 'For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log' > $ARTIF_DIR/fig7/info.txt
 
 
 cp "$RESULTS_DIR/wasabi1_zksnacks/2019-12-01 00-00-00--2020-01-01 00-00-00_unknown-static-100-1utxo/wasabi1_zksnacks_input_types_values_notnorm.png" $ARTIF_DIR/fig8
@@ -87,4 +86,21 @@ echo "Table 1 contains only definitions - nothing to reproduce" > $ARTIF_DIR/tab
 echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/table2/info.txt
 
 cp $RESULTS_DIR/liquidity_summary_*.json $ARTIF_DIR/table2_3
+
+
+cp "$RESULTS_DIR/wasabi2/wasabi2_cummul_values_norm.png" $ARTIF_DIR/fig23/
+cp "$RESULTS_DIR/wasabi2_zksnacks/wasabi2_zksnacks_cummul_values_norm.png" $ARTIF_DIR/fig24/
+cp "$RESULTS_DIR/wasabi2_kruw/wasabi2_kruw_cummul_values_norm.png" $ARTIF_DIR/fig25/
+
+cp "$RESULTS_DIR/wasabi2_others/wasabi2_others_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_gingerwallet/wasabi2_gingerwallet_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_kruw/wasabi2_kruw_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_coinjoin_nl/wasabi2_coinjoin_nl_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_wasabicoordinator/wasabi2_wasabicoordinator_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_wasabist/wasabi2_wasabist_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_mega/wasabi2_mega_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_btip/wasabi2_btip_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_unknown_2024_28ce7b/wasabi2_unknown_2024_28ce7b_cummul_values_norm.png" $ARTIF_DIR/fig26/
+cp "$RESULTS_DIR/wasabi2_unknown_2024_e85631/wasabi2_unknown_2024_e85631_cummul_values_norm.png" $ARTIF_DIR/fig26/
+
 
