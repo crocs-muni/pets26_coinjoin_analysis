@@ -85,7 +85,7 @@ echo "Table 1 contains only definitions - nothing to reproduce" > $ARTIF_DIR/tab
 
 echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/table2/info.txt
 
-cp $RESULTS_DIR/liquidity_summary_*.json $ARTIF_DIR/table2_3
+cp $RESULTS_DIR/liquidity_summary_*.json $ARTIF_DIR/table3_4
 
 
 cp "$RESULTS_DIR/wasabi2/wasabi2_cummul_values_norm.png" $ARTIF_DIR/fig23/
