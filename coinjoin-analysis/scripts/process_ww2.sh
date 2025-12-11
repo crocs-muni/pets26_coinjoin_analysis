@@ -47,3 +47,6 @@ python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars "EXPORT_TX_FLAGS=T
 # Analyse liquidity 
 python3 -m cj_process.parse_dumplings --cjtype ww2 --target-path $TMP_DIR/ --env_vars "ANALYSIS_LIQUIDITY=True" | tee parse_dumplings.py.log
 
+# Compare different txs datasets
+python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars "DOWNLOAD_MISSING_TRANSACTIONS=True" --target-path $TMP_DIR/ 
+

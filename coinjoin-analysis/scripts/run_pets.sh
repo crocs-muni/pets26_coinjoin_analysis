@@ -18,6 +18,8 @@ mkdir $TMP_DIR/
 #unzip $BASE_PATH/btc/dumplings.zip -d $TMP_DIR/
 unzip $BASE_PATH/dumplings.zip -d $TMP_DIR/
 
+unzip $BASE_PATH/missing_dumplings_txs.zip -d $BASE_PATH/missing_dumplings_txs
+
 
 #
 # Process Wasabi 2.0
@@ -49,3 +51,9 @@ $BASE_PATH/coinjoin-analysis/scripts/visualize_ww2.sh
 $BASE_PATH/coinjoin-analysis/scripts/visualize_aw.sh
 $BASE_PATH/coinjoin-analysis/scripts/visualize_ww1.sh
 $BASE_PATH/coinjoin-analysis/scripts/visualize_sw.sh
+
+
+#
+# Copy images and data into results directory
+#
+$BASE_PATH/coinjoin-analysis/scripts/collect_results.sh

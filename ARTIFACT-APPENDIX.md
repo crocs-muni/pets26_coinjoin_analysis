@@ -90,10 +90,12 @@ All artifacts are available from https://github.com/crocs-muni/pets26_coinjoin_a
 cd $BASE_PATH
 git clone https://github.com/crocs-muni/pets26_coinjoin_analysis.git
 ```
-5. Download dumplings.zip into $BASE_PATH
+5. Download dumplings.zip and missing_dumplings_txs.zip into $BASE_PATH
 ```
+cd $BASE_PATH
 wget https://zenodo.org/records/17870025/files/dumplings_20251110.zip
-mv dumplings_20251110.zip $BASE_PATH/dumplings.zip
+mv dumplings_20251110.zip dumplings.zip
+wget https://zenodo.org/records/17870025/files/missing_dumplings_txs.zip
 ```
 6. Copy `coinjoin-analysis` into $BASE_PATH
 ```
@@ -124,6 +126,7 @@ Expected result:
 ```
 coinjoin-analysis
 dumplings.zip
+missing_dumplings_txs.zip
 pets26_coinjoin_analysis
 venv
 ```
