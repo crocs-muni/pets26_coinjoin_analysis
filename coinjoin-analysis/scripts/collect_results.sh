@@ -25,8 +25,8 @@ echo "Generated from non-public dataset not made public due to privacy reasons a
 echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/fig4/info.txt
 echo "Generated from non-public dataset not made public due to privacy reasons as explained in Appendix A." > $ARTIF_DIR/fig5/info.txt
 
-# Copy missing_dumplings_txs.zip, run type=ww2 DOWNLOAD_MISSING_TRANSACTIONS=True
-cp "$RESULTS_DIR/crawl_datasets.png" $ARTIF_DIR/fig6
+# fig6 - comparison of different datasets of WW2 transactions
+cp "$RESULTS_DIR/wasabi2_others/crawl_datasets.png" $ARTIF_DIR/fig6
 
 cp "$RESULTS_DIR/wasabi2/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7
 echo "For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => 'python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
