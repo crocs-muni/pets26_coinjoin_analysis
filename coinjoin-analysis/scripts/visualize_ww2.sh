@@ -9,5 +9,6 @@ python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env
 # Visualization of wallets predictions in time
 python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars "ANALYSIS_WALLET_PREDICTION=True" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
 
-
+# Visualise flows between coordinators
+python3 -m cj_process.visualize_coordinators $TMP_DIR
 

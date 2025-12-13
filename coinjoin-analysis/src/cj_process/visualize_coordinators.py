@@ -97,7 +97,7 @@ def build_intercoord_flows_sankey_good(base_path: str, entity_dict: dict, transa
                                  f" [{'all coinjoins' if start_date is None else 'coinjoins after ' + start_date}]", font_size=10)
     print(f"Sankey diagram updated")
     #fig.show()  # BUGBUG: this call hangs # This ensures the renderer is initialized before saving
-    fig.write_html(f'{output_file_template}.html', auto_open=False)
+    fig.write_html(os.path.join(base_path, f'{output_file_template}.html'), auto_open=False)
     print(f"Sankey diagram shown")
     # fig.to_html(os.path.join(base_path, f'{output_file_template}.html'))
     # print(f"Sankey diagram to html saved")
