@@ -45,6 +45,7 @@ cp "$RESULTS_DIR/wasabi2_kruw/wasabi2_kruw_wallets_predictions_dynamics.png" $AR
 cp "$RESULTS_DIR/wasabi2_opencoordinator/2025-03-01 00-00-00--2025-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_opencoordinator_input_types_values_notnorm.png" $ARTIF_DIR/fig11
 
 cp $TPM_DIR/coordinator_flows_*.html $ARTIF_DIR/fig12
+cp $TPM_DIR/coordinator_flows_*.json $ARTIF_DIR/fig12
 
 cp "$RESULTS_DIR/crawl_all_coordinators_in_out_boxplot.png" $ARTIF_DIR/fig13
 
