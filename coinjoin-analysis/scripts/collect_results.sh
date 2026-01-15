@@ -29,7 +29,8 @@ echo "Generated from non-public dataset not made public due to privacy reasons a
 cp "$RESULTS_DIR/wasabi2_others/crawl_datasets.png" $ARTIF_DIR/fig6
 
 cp "$RESULTS_DIR/wasabi2/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7
-echo 'For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log' > $ARTIF_DIR/fig7/info.txt
+cp "$RESULTS_DIR/wasabi2_norelativereorder/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7/wasabi2_input_types_nums_notnorm_norelativereorder.png
+#echo 'For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log' > $ARTIF_DIR/fig7/info.txt
 
 
 cp "$RESULTS_DIR/wasabi1_zksnacks/2019-12-01 00-00-00--2020-01-01 00-00-00_unknown-static-100-1utxo/wasabi1_zksnacks_input_types_values_notnorm.png" $ARTIF_DIR/fig8
@@ -43,9 +44,13 @@ cp "$RESULTS_DIR/wasabi2_zksnacks/wasabi2_zksnacks_wallets_predictions_dynamics.
 cp "$RESULTS_DIR/wasabi2_kruw/wasabi2_kruw_wallets_predictions_dynamics.png" $ARTIF_DIR/fig10
 
 cp "$RESULTS_DIR/wasabi2_opencoordinator/2025-03-01 00-00-00--2025-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_opencoordinator_input_types_values_notnorm.png" $ARTIF_DIR/fig11
+cp "$RESULTS_DIR/wasabi2_opencoordinator__2025_03/2025-03-01 00-00-00--2025-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_opencoordinator_input_types_values_notnorm.png" $ARTIF_DIR/fig11/wasabi2_opencoordinator_input_types_values_notnorm_crop.png
+
 
 cp $TPM_DIR/coordinator_flows_*.html $ARTIF_DIR/fig12
 cp $TPM_DIR/coordinator_flows_*.json $ARTIF_DIR/fig12
+echo 'For verification, check reported values in coordinator_flows_values_.json and compare with values typeset in picture: zksnacks->kruw, wasabicoordinator->kruw and opencoordinator->kruw and & coordinator_flows_values_2025-01-01.json: kruw->opencoordinator, opencoordinator->kruw ' > $ARTIF_DIR/fig12/info.txt
+
 
 cp "$RESULTS_DIR/crawl_all_coordinators_in_out_boxplot.png" $ARTIF_DIR/fig13
 
