@@ -1,5 +1,6 @@
 
 SATS_IN_BTC = 100000000
+MAX_SATS = 21000000*SATS_IN_BTC
 
 VerboseTransactionInfoLineSeparator = ':::'
 VerboseInOutInfoInLineSeparator = '}'
@@ -32,3 +33,5 @@ WASABI1_COORD_NAMES_ALL = ["others", "zksnacks"]
 
 # Threshold from BIP-125: any input with nSequence < 0xFFFFFFFE signals RBF.
 RBF_THRESHOLD = 0xFFFFFFFE  # 4294967294
+
+SAFE_CPU_CORES = 24

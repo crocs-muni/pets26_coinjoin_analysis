@@ -2288,7 +2288,13 @@ def obtain_wallets_info(base_path, load_wallet_info_via_rpc, load_wallet_from_do
                 # Wallet addresses (as obtained by 'listkeys' RPC) - now extracted from 'keys.json' file
                 with open(os.path.join(target_base_path, 'keys.json'), "r") as file:
                     wallet_keys = json.load(file)
-                    if isinstance(wallet_keys, str) and (wallet_coins.lower() == 'timeout' or wallet_coins.lower() == 'this method is not available in joinmarket'):
+                    timout_detected = False
+                    if isinstance(wallet_coins, str) and (wallet_coins.lower() == 'timeout' or wallet_coins.lower() == 'this method is not available in joinmarket'):
+                        timout_detected = True
+                    if isinstance(wallet_keys, str) and (wallet_keys.lower() == 'timeout' or wallet_keys.lower() == 'this method is not available in joinmarket'):
+                        timout_detected = True
+
+                    if timout_detected:
                         logging.error(f'Loading wallet keys failed with \"{wallet_keys}\" for \"{target_base_path}\"')
                         wallets_info[wallet_name] = {}
                     else:
@@ -2485,13 +2491,12 @@ def load_tx_database_from_btccore(base_tx_path):
     files = list_files(base_tx_path, '.json', 'block_')
     for tx_file in files:  # Each file corresponds to whole block - may be multiple transactions
         print(f'Loading from block file {tx_file}')
-        with (open(tx_file, "r") as file):
+        with open(tx_file, "r") as file:
             block_txs = json.load(file)
             for tx_info in block_txs['tx']:
                 datetime_obj = datetime.fromtimestamp(block_txs['time'], tz=UTC)
                 tx_info['mine_time'] = datetime_obj.strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
                 tx_db[tx_info['txid']] = tx_info
-
 
             # # Create a Transaction object from the raw hex
             # tx = Transaction.parse(raw_tx['txRawHex'], False, 'regtest')
@@ -3414,7 +3419,7 @@ def main(argv=None):
     target_base_paths = [os.path.join(super_base_path, '!unproccesed')]
 
     # If provided, use paths from cli arguments instead
-    if op.target_path is not None:
+    if op.target_path is not None and len(op.target_path) > 0:
         super_base_path = longest_common_prefix(op.target_path)
         target_base_paths = [path for path in op.target_path]
 

@@ -561,7 +561,7 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
     mining_fee_rates = als.load_json_from_file(os.path.join(target_path, 'fee_rates.json'))
 
     # Load false positives
-    false_cjtxs = als.load_false_cjtxs_from_file(os.path.join(target_path, 'false_cjtxs.json'))
+    false_cjtxs = als.load_false_cjtxs(target_path)
 
     # Compute number of required month subgraphs
     num_months = sum([1 for dir_name in files
@@ -593,8 +593,8 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
     #new_month_indices = [('placeholder', 0, files[0][0:7])]  # Start with the first index
     new_month_indices = []
     next_month_index = 0
-    weeks_dict = defaultdict(dict)
     days_dict = defaultdict(dict)
+    weeks_dict = defaultdict(dict)
     months_dict = defaultdict(dict)
 
     for dir_name in sorted(files):
@@ -649,7 +649,8 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
                 new_month_indices.append(('year', next_month_index, dir_name[0:7]))
             next_month_index += len(data["coinjoins"])  # Store index of start fo next month (right after last index of current month)
             # TODO: if len(data["coinjoins"]) == 0, then month tick is plotted over previous one and is not visible
-            #    add some artificial space to improve visibility? Or add artificial empty coinjoin bar?
+            #    add some artificial space to improve visibility? Or add artificial empty coinjoin bar? Or use different
+            #    plotting style which will visibly plot also empty months?
 
             # Detect transactions with no remixes on input/out or both
             no_remix = als.detect_no_inout_remix_txs(data["coinjoins"])
@@ -732,20 +733,11 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
                 ax.set_title(f'Type of inputs for given cjtx ({"values" if analyze_values else "number"})\n{mix_id} {dir_name}')
             logging.info(f'{target_base_path} inputs analyzed')
 
-            # Compute liquidity inflows (sum of weeks)
-            # Split cjtxs into weeks, then compute sum of MIX_ENTER
-            for key, record in data["coinjoins"].items():
-                # Parse the 'broadcast_time/virtual' string into a datetime object
-                if mix_protocol == MIX_PROTOCOL.WASABI2:
-                    dt = precomp_datetime.strptime(record['broadcast_time_virtual'], '%Y-%m-%d %H:%M:%S.%f')
-                else:
-                    dt = precomp_datetime.strptime(record['broadcast_time'], '%Y-%m-%d %H:%M:%S.%f')
-                year, week_num, _ = dt.isocalendar()
-                weeks_dict[(year, week_num)][key] = record
-                day_key = (dt.year, dt.month, dt.day)
-                days_dict[day_key][key] = record
-                month_key = (dt.year, dt.month)
-                months_dict[month_key][key] = record
+            # Compute liquidity inflows (sum of days/weeks/months)
+            days_dict_interval, weeks_dict_interval, months_dict_interval = als.split_coinjoins_per_interval(data["coinjoins"], mix_protocol)
+            days_dict.update(days_dict_interval)
+            weeks_dict_interval.update(weeks_dict_interval)
+            months_dict_interval.update(months_dict_interval)
 
             # Extend the y-limits to ensure the vertical lines go beyond the plot edges
             if ax:
@@ -762,7 +754,7 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
                          f'{mix_id}_input_types_{"values" if analyze_values else "nums"}_{"norm" if normalize_values else "notnorm"}{restrict_size_string}')
                 fig_single.savefig(f'{save_file}.png', dpi=300)
                 fig_single.savefig(f'{save_file}.pdf', dpi=300)
-                logging.debug(f'Sucesfully saved figure {save_file}')
+                logging.debug(f'Successfully saved figure {save_file}')
                 del ax
                 del fig_single
 
@@ -816,7 +808,6 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
             ax.set_ylabel(label, color='gray', fontsize='6')
             ax.tick_params(axis='y', colors='gray')
 
-            new_month_liquidity = compute_aggregated_interval_liquidity(months_dict)
             restrict_size_string = "" if restrict_to_in_size is None else f'{round(restrict_to_in_size[1] / SATS_IN_BTC, 3)}btc'
             save_file = os.path.join(target_path,
                              f'{mix_id}_freshliquidity_{"values" if analyze_values else "nums"}_{"norm" if normalize_values else "notnorm"}{restrict_size_string}')
@@ -971,6 +962,19 @@ def wasabi_plot_remixes_worker(mix_id: str, mix_protocol: MIX_PROTOCOL, target_p
     result['all_changing_liquidity_timecutoff'] = changing_liquidity_timecutoff
     result['all_stay_liquidity_timecutoff'] = stay_liquidity_timecutoff
     return result
+
+
+def run_estimate_wallet_prediction_factor(target_path: str, coord: str, conf_interval: str, plot_inputs_predictions: bool, plot_outputs_predictions: bool):
+    if coord == 'wasabi2_zksnacks':
+        predict_matrix = als.load_json_from_file(
+            os.path.join(target_path, 'wallet_estimation_matrix_ww2zksnacks.json'))
+    else:
+        predict_matrix = als.load_json_from_file(
+            os.path.join(target_path, 'wallet_estimation_matrix_ww2kruw.json'))
+    all_data = als.load_coinjoins_from_file(os.path.join(target_path, coord), None, True)
+
+    cjvis.estimate_wallet_prediction_factor(all_data, target_path, coord, predict_matrix[conf_interval],
+                                            plot_inputs_predictions, plot_outputs_predictions)
 
 
 def estimate_wallet_prediction_factor(all_data: dict, base_path, mix_id, prediction_matrix: dict=None,
@@ -1999,7 +2003,7 @@ def plot_intermix_ratios(intercoord_ratios: dict, target_path: str | Path, prefi
 
         # Add dashed horizontal line at 0.4
         plt.axhline(0.4, color="gray", linestyle="--", linewidth=1)
-
+        #plt.ylim(0, 1)
         legend_handles = [bp_in["boxes"][0], bp_out["boxes"][0]]
         plt.legend(legend_handles, ["inputs", "outputs"], loc="lower left")
 
