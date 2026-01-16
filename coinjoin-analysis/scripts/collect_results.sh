@@ -44,11 +44,10 @@ cp "$RESULTS_DIR/wasabi2_zksnacks/wasabi2_zksnacks_wallets_predictions_dynamics.
 cp "$RESULTS_DIR/wasabi2_kruw/wasabi2_kruw_wallets_predictions_dynamics.png" $ARTIF_DIR/fig10
 
 cp "$RESULTS_DIR/wasabi2_opencoordinator/2025-03-01 00-00-00--2025-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_opencoordinator_input_types_values_notnorm.png" $ARTIF_DIR/fig11
-cp "$RESULTS_DIR/wasabi2_opencoordinator__2025_03/2025-03-01 00-00-00--2025-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_opencoordinator_input_types_values_notnorm.png" $ARTIF_DIR/fig11/wasabi2_opencoordinator_input_types_values_notnorm_crop.png
+cp "$RESULTS_DIR/wasabi2_opencoordinator__2025_03/2025-03-07 00-00-07.000--2025-03-12 23-59-59.000_unknown-static-100-1utxo/wasabi2_opencoordinator__2025_03_input_types_values_notnorm.png" $ARTIF_DIR/fig11/wasabi2_opencoordinator_input_types_values_notnorm_crop.png
 
 
-cp $TPM_DIR/coordinator_flows_*.html $ARTIF_DIR/fig12
-cp $TPM_DIR/coordinator_flows_*.json $ARTIF_DIR/fig12
+cp $TMP_DIR/coordinator_flows* $ARTIF_DIR/fig12
 echo 'For verification, check reported values in coordinator_flows_values_.json and compare with values typeset in picture: zksnacks->kruw, wasabicoordinator->kruw and opencoordinator->kruw and & coordinator_flows_values_2025-01-01.json: kruw->opencoordinator, opencoordinator->kruw ' > $ARTIF_DIR/fig12/info.txt
 
 
