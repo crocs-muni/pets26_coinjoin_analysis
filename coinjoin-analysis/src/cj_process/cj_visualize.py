@@ -1934,6 +1934,28 @@ def plot_intermix_ratios(intercoord_ratios: dict, target_path: str | Path, prefi
         df["broadcast_time"] = pd.to_datetime(df["broadcast_time"])
         df = df.sort_values("broadcast_time").reset_index(drop=True)
 
+        # Print
+        s = df["out_ratio"] * 100
+        q1 = s.quantile(0.25)
+        median = s.quantile(0.50)
+        q3 = s.quantile(0.75)
+        iqr = q3 - q1
+        avg = s.mean()
+        lower_whisker = s[s >= q1 - 1.5 * iqr].min()
+        upper_whisker = s[s <= q3 + 1.5 * iqr].max()
+
+        SM.print(f"""
+        coordinator = {coordinator}
+        Q1      = {q1}
+        Median  = {median}
+        Average = {avg}
+        Q3      = {q3}
+        IQR     = {iqr}
+        Lower W = {lower_whisker}
+        Upper W = {upper_whisker}
+        """)
+
+
         # Plot
         plt.figure(figsize=(10, 5))
         plt.plot(df["broadcast_time"], df["out_ratio"] * 100, label="outputs (same coordinator)", color='green', alpha=0.2)
