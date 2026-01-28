@@ -18,4 +18,4 @@ python3 -m cj_process.parse_dumplings --cjtype ww2 --env_vars "PROCESS_NOTABLE_I
 # Run generation of aggregated plots for all coordinators WITHOUT tx reordering - copy all existing files first, then run generation again
 mkdir -p $TMP_DIR/Scanner/wasabi2_norelativereorder/
 cp -a $TMP_DIR/Scanner/wasabi2/. $TMP_DIR/Scanner/wasabi2_norelativereorder/
-python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;MIX_IDS=['wasabi2_norelativereorder']" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
+python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False;MIX_IDS=['wasabi2_norelativereorder']" --target-path $TMP_DIR/ | tee parse_dumplings.py.log
