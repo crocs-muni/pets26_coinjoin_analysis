@@ -28,8 +28,8 @@ echo "Generated from non-public dataset not made public due to privacy reasons a
 # fig6 - comparison of different datasets of WW2 transactions
 cp "$RESULTS_DIR/wasabi2_others/crawl_datasets.png" $ARTIF_DIR/fig6
 
-cp "$RESULTS_DIR/wasabi2/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7
-cp "$RESULTS_DIR/wasabi2_norelativereorder/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_notnorm.png" $ARTIF_DIR/fig7/wasabi2_input_types_nums_notnorm_norelativereorder.png
+cp "$RESULTS_DIR/wasabi2/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_norm.png" $ARTIF_DIR/fig7
+cp "$RESULTS_DIR/wasabi2_norelativereorder/2023-03-01 00-00-00--2023-04-01 00-00-00_unknown-static-100-1utxo/wasabi2_input_types_nums_norm.png" $ARTIF_DIR/fig7/wasabi2_input_types_nums_norm_norelativereorder.png
 #echo 'For WW2, the picture without sorting is obtained by running with SORT_COINJOINS_BY_RELATIVE_ORDER=False => python3 -m cj_process.parse_dumplings --cjtype ww2 --action plot_coinjoins --env_vars "PLOT_REMIXES_SINGLE_INTERVAL=True;SORT_COINJOINS_BY_RELATIVE_ORDER=False" --target-path $TMP_DIR/ | tee parse_dumplings.py.log' > $ARTIF_DIR/fig7/info.txt
 
 
